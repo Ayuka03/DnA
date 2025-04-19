@@ -1,4 +1,4 @@
-import 'package:dna_flutter_app/presentation/ui/screens/start_screen.dart';
+import 'package:dna_app/presentation/ui/screens/start_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
