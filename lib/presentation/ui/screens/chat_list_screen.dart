@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ChatListScreen extends StatelessWidget {
-  const ChatListScreen({super.key});
+  ChatListScreen({super.key});
+  List<dynamic> chts = [];
 
   @override
   Widget build(BuildContext context) {
@@ -13,9 +14,30 @@ class ChatListScreen extends StatelessWidget {
           topLeft: Radius.circular(30),
           topRight: Radius.circular(30),
         ),
-        child: Scaffold(backgroundColor: Colors.white),
+        child: Scaffold(
+          backgroundColor: Colors.white,
+          body: Column(
+            children: [
+              Column(
+                children: [
+                  ListView.builder(
+                    itemCount: 10,
+                    // itemCount: chts.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        // leading: Image.network(
+                        //   'https://i.pinimg.com/originals/55/64/7d/55647dc681ad4abfe0ba40ba31d4a180.jpg',
+                        // ),
+                        title: Text('просто данёк'),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
 }
- 
