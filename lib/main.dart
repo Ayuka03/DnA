@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
           backgroundColor: Color.fromARGB(255, 250, 63, 40),
         ),
       ),
-      home: const ChatListScreen(),
+      home: const StartScreen(),
     );
   }
 }
