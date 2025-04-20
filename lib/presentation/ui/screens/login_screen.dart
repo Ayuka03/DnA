@@ -22,7 +22,6 @@ class LoginScreen extends StatelessWidget {
 
           child: Container(
             alignment: Alignment.center,
-
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(60),
@@ -46,7 +45,7 @@ class LoginScreen extends StatelessWidget {
                     onPressed: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => ChatListScreen(),
+                          builder: (context) => ChatListScreen(user: ''),
                         ),
                       );
                     },

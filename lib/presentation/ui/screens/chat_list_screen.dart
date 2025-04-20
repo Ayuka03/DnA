@@ -1,8 +1,10 @@
 import 'package:dna_app/presentation/ui/screens/personal_chat.dart';
+import 'package:dna_app/presentation/ui/screens/settings_srceen.dart';
 import 'package:flutter/material.dart';
 
 class ChatListScreen extends StatefulWidget {
-  ChatListScreen({super.key});
+  ChatListScreen({super.key, required this.user});
+  final String user;
 
   @override
   State<ChatListScreen> createState() => _ChatListScreenState();
@@ -10,6 +12,7 @@ class ChatListScreen extends StatefulWidget {
 
 class _ChatListScreenState extends State<ChatListScreen> {
   List<dynamic> chts = [];
+  int selectedIndex = 0;
 
   String userName = 'Даниил Бедарев'; //Временно!!!!
   @override
@@ -19,7 +22,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
         actions: [
           IconButton(
             onPressed: () {},
-            icon: Icon(Icons.settings),
+            icon: Icon(Icons.edit_square),
             color: Colors.white,
           ),
         ],
@@ -42,15 +45,38 @@ class _ChatListScreenState extends State<ChatListScreen> {
           ),
         ),
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: selectedIndex,
+        onTap: (index) {
+          print(index);
+          if (selectedIndex == index) return;
+          if (index == 1) {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder:
+                    (context) =>
+                        SettingsSrceen(user: 'user', indexBottomBar: 1),
+              ),
+            );
+          }
+        },
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Чаты'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Настройки',
+          ),
+        ],
+      ),
       backgroundColor: Color.fromARGB(255, 250, 63, 40),
       body: ClipRRect(
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(30),
           topRight: Radius.circular(30),
         ),
-        child: Scaffold(
-          backgroundColor: Colors.white,
-          body: Column(
+        child: Container(
+          color: Colors.white,
+          child: Column(
             children: [
               Flexible(
                 child: ListView.separated(
@@ -99,3 +125,22 @@ class _ChatListScreenState extends State<ChatListScreen> {
     );
   }
 }
+     // index = 0;
+
+              // setState(() {
+              //   selectedIndex = index;
+              // });
+
+              // if (index == 0) {
+              //   Navigator.of(context).push(
+              //     MaterialPageRoute(
+              //       builder: (context) => PersonalChat(userName: userName),
+              //     ),
+              //   );
+              // } else {
+              //   Navigator.of(context).push(
+              //     MaterialPageRoute(
+              //       builder: (context) => SettingsSrceen(user: user),
+              //     ),
+              //   );
+              // }
