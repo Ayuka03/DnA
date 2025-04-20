@@ -2,7 +2,7 @@ import 'package:dna_app/presentation/ui/screens/personal_chat.dart';
 import 'package:flutter/material.dart';
 
 class ChatListScreen extends StatefulWidget {
-  ChatListScreen({super.key});
+  const ChatListScreen({super.key});
 
   @override
   State<ChatListScreen> createState() => _ChatListScreenState();
@@ -48,9 +48,9 @@ class _ChatListScreenState extends State<ChatListScreen> {
           topLeft: Radius.circular(30),
           topRight: Radius.circular(30),
         ),
-        child: Scaffold(
-          backgroundColor: Colors.white,
-          body: Column(
+        child: Container(
+          color: Colors.white,
+          child: Column(
             children: [
               Flexible(
                 child: ListView.separated(

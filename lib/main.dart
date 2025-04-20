@@ -1,4 +1,4 @@
-import 'package:dna_app/presentation/ui/screens/chat_list_screen.dart';
+// import 'package:dna_app/presentation/ui/screens/chat_list_screen.dart';
 import 'package:dna_app/presentation/ui/screens/start_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -14,10 +14,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        
         colorScheme: ColorScheme.fromSeed(
+          
           seedColor: Color.fromARGB(255, 250, 63, 40),
         ),
         appBarTheme: AppBarTheme(
+          
           backgroundColor: Color.fromARGB(255, 250, 63, 40),
         ),
       ),

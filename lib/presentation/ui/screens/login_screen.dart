@@ -10,69 +10,90 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 250, 63, 40),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(
-            top: 150,
-            bottom: 220,
-            left: 20,
-            right: 20,
+      backgroundColor: Colors.transparent,
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color.fromARGB(255, 250, 63, 40),
+              const Color.fromARGB(255, 248, 183, 183),
+            ],
           ),
-
-          child: Container(
-            alignment: Alignment.center,
-
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(60),
+        ),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(
+              top: 150,
+              bottom: 220,
+              left: 20,
+              right: 20,
             ),
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                spacing: 20,
-                children: [
-                  Text(
-                    'Войдите в DnA!',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
-                  ),
-                  Text(
-                    'Если уже были у нас',
-                    style: TextStyle(fontWeight: FontWeight.w500),
-                  ),
-                  CustomTextField(labelName: 'Ваша почта'),
-                  CustomTextField(labelName: 'Ваш пароль'),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => ChatListScreen(),
-                        ),
-                      );
-                    },
-                    style: ButtonStyle(
-                      foregroundColor: WidgetStatePropertyAll<Color>(
-                        const Color.fromARGB(255, 191, 34, 23),
+
+            child: Container(
+              alignment: Alignment.center,
+
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(60),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  spacing: 20,
+                  children: [
+                    Text(
+                      'Войдите в DnA!',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w800,
                       ),
                     ),
-                    child: Text('Войти'),
-                  ),
-                  TextButton(
-                    style: ButtonStyle(
-                      foregroundColor: WidgetStatePropertyAll<Color>(
-                        const Color.fromARGB(100, 191, 34, 23),
-                      ),
+
+                    Image.asset(
+                      'assets/pictures/logo.png',
+                      height: 100,
+                      width: 100,
                     ),
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => RegistrationScreen(),
+                    Text(
+                      'Если уже были у нас',
+                      style: TextStyle(fontWeight: FontWeight.w500),
+                    ),
+                    CustomTextField(labelName: 'Ваша почта'),
+                    CustomTextField(labelName: 'Ваш пароль'),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => ChatListScreen(),
+                          ),
+                        );
+                      },
+                      style: ButtonStyle(
+                        foregroundColor: WidgetStatePropertyAll<Color>(
+                          const Color.fromARGB(255, 191, 34, 23),
                         ),
-                      );
-                    },
-                    child: Text('Меня здесь не было'),
-                  ),
-                ],
+                      ),
+                      child: Text('Войти'),
+                    ),
+                    TextButton(
+                      style: ButtonStyle(
+                        foregroundColor: WidgetStatePropertyAll<Color>(
+                          const Color.fromARGB(100, 191, 34, 23),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => RegistrationScreen(),
+                          ),
+                        );
+                      },
+                      child: Text('Меня здесь не было'),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
