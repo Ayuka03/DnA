@@ -8,9 +8,20 @@ class ChatListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.settings))],
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.settings),
+            color: Colors.white,
+          ),
+        ],
         centerTitle: true,
-        title: Text('data'),
+        title: Text('Мессенджер'),
+        titleTextStyle: TextStyle(
+          color: Colors.white,
+          fontSize: 23,
+          fontWeight: FontWeight.w500,
+        ),
         leading: GestureDetector(
           child: Container(
             height: 5,
@@ -24,9 +35,6 @@ class ChatListScreen extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            // child: Image.network(
-            //   'https://avatars.mds.yandex.net/i?id=c70d5bd654c8ad9b7041453b3226875e_l-12421557-images-thumbs&n=13',
-            // ),
           ),
         ),
       ),
@@ -41,11 +49,21 @@ class ChatListScreen extends StatelessWidget {
           body: Column(
             children: [
               Flexible(
-                child: ListView.builder(
+                child: ListView.separated(
+                  separatorBuilder:
+                      (context, index) => Divider(
+                        thickness: 2,
+                        height: 1,
+                        color: Color.fromARGB(40, 250, 63, 40),
+                      ),
                   itemCount: 10,
-                  // itemCount: chts.length,
                   itemBuilder: (context, index) {
                     return ListTile(
+                      contentPadding: EdgeInsets.symmetric(
+                        vertical: 3,
+                        horizontal: 10,
+                      ),
+                      visualDensity: VisualDensity(vertical: -0.2),
                       leading: ClipOval(
                         child: Image.network(
                           'https://i.pinimg.com/originals/55/64/7d/55647dc681ad4abfe0ba40ba31d4a180.jpg',
@@ -53,6 +71,7 @@ class ChatListScreen extends StatelessWidget {
                         ),
                       ),
                       title: Text('просто данёк'),
+                      subtitle: Text('Печатает ...'),
                     );
                   },
                 ),
