@@ -1,5 +1,6 @@
 //
 import 'package:dna_app/presentation/ui/screens/chat_list_screen.dart';
+import 'package:dna_app/presentation/ui/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 
 class StartScreen extends StatelessWidget {
@@ -15,7 +16,9 @@ class StartScreen extends StatelessWidget {
           width: 300,
           height: 300,
           decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(60)),
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(60),
+          ),
           child: Padding(
             padding: const EdgeInsets.all(20),
             child: Column(
@@ -24,20 +27,21 @@ class StartScreen extends StatelessWidget {
                   'Добро пожаловать!',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 Expanded(
                   child: Text(
-                      textAlign: TextAlign.center,
-                      'Спасибо за использование нашего проекта, ...+logo'),
+                    textAlign: TextAlign.center,
+                    'Спасибо за использование нашего проекта, ...+logo',
+                  ),
                 ),
                 TextButton(
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => ChatListScreen()));
-                    },
-                    child: Text('нажми нажми'))
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => LoginScreen()),
+                    );
+                  },
+                  child: Text('нажми нажми'),
+                ),
               ],
             ),
           ),
