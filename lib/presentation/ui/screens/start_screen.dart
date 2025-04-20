@@ -1,4 +1,5 @@
 import 'package:dna_app/presentation/ui/screens/chat_list_screen.dart';
+import 'package:dna_app/presentation/ui/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 
 class StartScreen extends StatelessWidget {
@@ -35,7 +36,7 @@ class StartScreen extends StatelessWidget {
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => ChatListScreen()),
+                      MaterialPageRoute(builder: (context) => LoginScreen()),
                     );
                   },
                   child: Text('нажми нажми'),
