@@ -62,6 +62,8 @@ class _ChatListScreenState extends State<ChatListScreen> {
                       ),
                   itemCount: 10,
                   itemBuilder: (context, index) {
+                    final String imageUrl =
+                        'https://memepedia.ru/wp-content/uploads/2016/09/uzbagoysya_29873845_orig_.jpeg';
                     return ListTile(
                       contentPadding: EdgeInsets.symmetric(
                         vertical: 3,
@@ -69,10 +71,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                       ),
                       visualDensity: VisualDensity(vertical: -0.2),
                       leading: ClipOval(
-                        child: Image.network(
-                          'https://sportishka.com/uploads/posts/2022-11/1667451727_6-sportishka-com-p-kachok-bez-golovi-vkontakte-7.png',
-                          fit: BoxFit.cover,
-                        ),
+                        child: Image.network(imageUrl, fit: BoxFit.cover),
                       ),
                       trailing: Icon(
                         Icons.new_releases_outlined,
@@ -84,7 +83,10 @@ class _ChatListScreenState extends State<ChatListScreen> {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder:
-                                (context) => PersonalChat(userName: userName),
+                                (context) => PersonalChat(
+                                  userName: userName,
+                                  imageUrl: imageUrl,
+                                ),
                           ),
                         );
                       },
