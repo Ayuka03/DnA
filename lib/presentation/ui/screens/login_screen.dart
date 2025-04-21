@@ -5,7 +5,9 @@ import 'package:dna_app/presentation/ui/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  LoginScreen({super.key});
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -60,8 +62,14 @@ class LoginScreen extends StatelessWidget {
                       'Если уже были у нас',
                       style: TextStyle(fontWeight: FontWeight.w500),
                     ),
-                    CustomTextField(labelName: 'Ваша почта'),
-                    CustomTextField(labelName: 'Ваш пароль'),
+                    CustomTextField(
+                      labelName: 'Ваша почта',
+                      controller: _emailController,
+                    ),
+                    CustomTextField(
+                      labelName: 'Ваш пароль',
+                      controller: _passwordController,
+                    ),
                     TextButton(
                       onPressed: () {
                         Navigator.of(context).push(

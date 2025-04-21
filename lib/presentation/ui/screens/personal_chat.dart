@@ -15,6 +15,8 @@ class PersonalChat extends StatefulWidget {
 }
 
 class _PersonalChatState extends State<PersonalChat> {
+  List<String> messagesFromUser = [];
+  final TextEditingController _messageFromUser = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,69 +52,103 @@ class _PersonalChatState extends State<PersonalChat> {
           child: Column(
             children: [
               Expanded(
-                child: ListView(
-                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 4),
-                  children: [
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: Container(
-                        padding: EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          border: Border.all(
-                            width: 2,
-                            color: const Color.fromARGB(235, 255, 114, 104),
+                child: ListView.builder(
+                  itemCount: messagesFromUser.length,
+                  // messagesFromUser.length,
+                  itemBuilder: (context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Container(
+                          padding: EdgeInsets.all(4),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            border: Border.all(
+                              width: 3,
+                              color: const Color.fromARGB(235, 255, 114, 104),
+                            ),
+                            color: const Color.fromARGB(147, 255, 255, 255),
                           ),
-                          color: const Color.fromARGB(148, 255, 112, 101),
-                        ),
-                        child: Text('ладно'),
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: Container(
-                        padding: EdgeInsets.all(4),
-
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          border: Border.all(
-                            width: 2,
-                            color: const Color.fromARGB(235, 255, 114, 104),
+                          child: Text(
+                            messagesFromUser[index],
+                            style: TextStyle(fontWeight: FontWeight.bold),
                           ),
-                          color: const Color.fromARGB(148, 255, 112, 101),
                         ),
-                        child: Text('я'),
                       ),
-                    ),
-                    SizedBox(height: 10),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: Container(
-                        padding: EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          border: Border.all(
-                            width: 2,
-                            color: const Color.fromARGB(235, 255, 114, 104),
-                          ),
-                          color: const Color.fromARGB(148, 255, 112, 101),
-                        ),
-                        child: Text('пенис'),
-                      ),
-                    ),
-                  ],
+                    );
+                  },
                 ),
+                //  ListView(
+                //   padding: EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+                //   children: [
+                //     Align(
+                //       alignment: Alignment.centerRight,
+                //       child: Container(
+                //         padding: EdgeInsets.all(4),
+                //         decoration: BoxDecoration(
+                //           borderRadius: BorderRadius.circular(30),
+                //           border: Border.all(
+                //             width: 2,
+                //             color: const Color.fromARGB(235, 255, 114, 104),
+                //           ),
+                //           color: const Color.fromARGB(148, 255, 112, 101),
+                //         ),
+                //         child: Text('ладно'),
+                //       ),
+                //     ),
+                //     SizedBox(height: 10),
+                //     Align(
+                //       alignment: Alignment.centerRight,
+                //       child: Container(
+                //         padding: EdgeInsets.all(4),
+
+                //         decoration: BoxDecoration(
+                //           borderRadius: BorderRadius.circular(30),
+                //           border: Border.all(
+                //             width: 2,
+                //             color: const Color.fromARGB(235, 255, 114, 104),
+                //           ),
+                //           color: const Color.fromARGB(148, 255, 112, 101),
+                //         ),
+                //         child: Text('я'),
+                //       ),
+                //     ),
+                //     SizedBox(height: 10),
+                //     Align(
+                //       alignment: Alignment.centerRight,
+                //       child: Container(
+                //         padding: EdgeInsets.all(4),
+                //         decoration: BoxDecoration(
+                //           borderRadius: BorderRadius.circular(30),
+                //           border: Border.all(
+                //             width: 2,
+                //             color: const Color.fromARGB(235, 255, 114, 104),
+                //           ),
+                //           color: const Color.fromARGB(148, 255, 112, 101),
+                //         ),
+                //         child: Text('пенис'),
+                //       ),
+                //     ),
+                //   ],
+                // ),
               ),
               Padding(
                 padding: EdgeInsets.all(8),
                 child: Row(
                   children: [
                     Expanded(
-                      child: CustomTextField(labelName: 'Введите сообщение'),
+                      child: CustomTextField(
+                        labelName: 'Введите сообщение',
+                        controller: _messageFromUser,
+                      ),
                     ),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        messagesFromUser.add(_messageFromUser.text.trim());
+                        setState(() {});
+                        _messageFromUser.clear();
+                      },
                       icon: Icon(
                         Icons.send_outlined,
                         color: const Color.fromARGB(209, 250, 77, 65),

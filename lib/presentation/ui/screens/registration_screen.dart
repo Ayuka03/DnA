@@ -4,7 +4,11 @@ import 'package:dna_app/presentation/ui/custom_text_field.dart';
 import 'package:flutter/material.dart';
 
 class RegistrationScreen extends StatelessWidget {
-  const RegistrationScreen({super.key});
+  
+  RegistrationScreen({super.key});
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _passwordAgainController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -59,9 +63,9 @@ class RegistrationScreen extends StatelessWidget {
                       'Если не были у нас',
                       style: TextStyle(fontWeight: FontWeight.w500),
                     ),
-                    CustomTextField(labelName: 'Ваша почта'),
-                    CustomTextField(labelName: 'Ваш пароль'),
-                    CustomTextField(labelName: 'Ваш пароль снова'),
+                    CustomTextField(labelName: 'Ваша почта',controller: _emailController,),
+                    CustomTextField(labelName: 'Ваш пароль',controller: _passwordController,),
+                    CustomTextField(labelName: 'Ваш пароль снова',controller: _passwordAgainController,),
                     TextButton(
                       onPressed: () {},
                       style: ButtonStyle(
