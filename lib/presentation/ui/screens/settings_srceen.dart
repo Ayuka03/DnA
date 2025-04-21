@@ -18,27 +18,23 @@ class _SettingsSrceenState extends State<SettingsSrceen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: widget.indexBottomBar,
-        onTap: (index) {
-          print(index);
-          if (widget.indexBottomBar == index) return;
-          if (index == 0) {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => ChatListScreen(user: widget.user),
-              ),
-            );
-          }
-        },
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Чаты'),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Настройки',
-          ),
-        ],
-      ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   currentIndex: widget.indexBottomBar,
+      //   onTap: (index) {
+      //     print(index);
+      //     if (widget.indexBottomBar == index) return;
+      //     if (index == 0) {
+      //       Navigator.pop(context);
+      //     }
+      //   },
+      //   items: [
+      //     BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Чаты'),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.settings),
+      //       label: 'Настройки',
+      //     ),
+      //   ],
+      // ),
       appBar: AppBar(
         centerTitle: true,
         title: Text('Настройки'),
@@ -58,6 +54,50 @@ class _SettingsSrceenState extends State<SettingsSrceen> {
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(30),
           topRight: Radius.circular(30),
+        ),
+      ),
+      bottomNavigationBar: Container(
+        margin: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: const Color.fromARGB(255, 220, 220, 220),
+          borderRadius: BorderRadius.circular(30),
+          boxShadow: [
+            BoxShadow(
+              color: const Color.fromARGB(100, 0, 0, 0),
+              blurRadius: 10,
+              offset: Offset(0, 5),
+            ),
+          ],
+        ),
+        child: Theme(
+          data: Theme.of(context).copyWith(
+            splashColor: Colors.transparent,
+            splashFactory: NoSplash.splashFactory,
+          ),
+          child: BottomNavigationBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            type: BottomNavigationBarType.fixed,
+            selectedItemColor: Color.fromARGB(255, 250, 63, 40),
+            unselectedItemColor: Colors.black45,
+            selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
+            unselectedLabelStyle: TextStyle(fontWeight: FontWeight.normal),
+            currentIndex: widget.indexBottomBar,
+            onTap: (index) {
+              print(index);
+              if (widget.indexBottomBar == index) return;
+              if (index == 0) {
+                Navigator.pop(context);
+              }
+            },
+            items: const [
+              BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Чаты'),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.settings),
+                label: 'Настройки',
+              ),
+            ],
+          ),
         ),
       ),
     );
