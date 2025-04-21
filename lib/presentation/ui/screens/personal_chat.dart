@@ -28,11 +28,7 @@ class _PersonalChatState extends State<PersonalChat> {
           ),
         ],
         title: Text(widget.userName),
-        titleTextStyle: TextStyle(
-          color: Colors.white,
-          fontSize: 23,
-          fontWeight: FontWeight.w500,
-        ),
+
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -79,59 +75,6 @@ class _PersonalChatState extends State<PersonalChat> {
                     );
                   },
                 ),
-                //  ListView(
-                //   padding: EdgeInsets.symmetric(vertical: 8, horizontal: 4),
-                //   children: [
-                //     Align(
-                //       alignment: Alignment.centerRight,
-                //       child: Container(
-                //         padding: EdgeInsets.all(4),
-                //         decoration: BoxDecoration(
-                //           borderRadius: BorderRadius.circular(30),
-                //           border: Border.all(
-                //             width: 2,
-                //             color: const Color.fromARGB(235, 255, 114, 104),
-                //           ),
-                //           color: const Color.fromARGB(148, 255, 112, 101),
-                //         ),
-                //         child: Text('ладно'),
-                //       ),
-                //     ),
-                //     SizedBox(height: 10),
-                //     Align(
-                //       alignment: Alignment.centerRight,
-                //       child: Container(
-                //         padding: EdgeInsets.all(4),
-
-                //         decoration: BoxDecoration(
-                //           borderRadius: BorderRadius.circular(30),
-                //           border: Border.all(
-                //             width: 2,
-                //             color: const Color.fromARGB(235, 255, 114, 104),
-                //           ),
-                //           color: const Color.fromARGB(148, 255, 112, 101),
-                //         ),
-                //         child: Text('я'),
-                //       ),
-                //     ),
-                //     SizedBox(height: 10),
-                //     Align(
-                //       alignment: Alignment.centerRight,
-                //       child: Container(
-                //         padding: EdgeInsets.all(4),
-                //         decoration: BoxDecoration(
-                //           borderRadius: BorderRadius.circular(30),
-                //           border: Border.all(
-                //             width: 2,
-                //             color: const Color.fromARGB(235, 255, 114, 104),
-                //           ),
-                //           color: const Color.fromARGB(148, 255, 112, 101),
-                //         ),
-                //         child: Text('пенис'),
-                //       ),
-                //     ),
-                //   ],
-                // ),
               ),
               Padding(
                 padding: EdgeInsets.all(8),

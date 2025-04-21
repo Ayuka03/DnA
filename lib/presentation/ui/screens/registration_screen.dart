@@ -4,11 +4,11 @@ import 'package:dna_app/presentation/ui/custom_text_field.dart';
 import 'package:flutter/material.dart';
 
 class RegistrationScreen extends StatelessWidget {
-  
   RegistrationScreen({super.key});
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _passwordAgainController = TextEditingController();
+  final TextEditingController _passwordAgainController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -48,10 +48,7 @@ class RegistrationScreen extends StatelessWidget {
                   children: [
                     Text(
                       'Регистрация в DnA!',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w800,
-                      ),
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
 
                     Image.asset(
@@ -61,19 +58,27 @@ class RegistrationScreen extends StatelessWidget {
                     ),
                     Text(
                       'Если не были у нас',
-                      style: TextStyle(fontWeight: FontWeight.w500),
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
-                    CustomTextField(labelName: 'Ваша почта',controller: _emailController,),
-                    CustomTextField(labelName: 'Ваш пароль',controller: _passwordController,),
-                    CustomTextField(labelName: 'Ваш пароль снова',controller: _passwordAgainController,),
+                    CustomTextField(
+                      labelName: 'Ваша почта',
+                      controller: _emailController,
+                    ),
+                    CustomTextField(
+                      labelName: 'Ваш пароль',
+                      controller: _passwordController,
+                    ),
+                    CustomTextField(
+                      labelName: 'Ваш пароль снова',
+                      controller: _passwordAgainController,
+                    ),
                     TextButton(
                       onPressed: () {},
-                      style: ButtonStyle(
-                        foregroundColor: WidgetStatePropertyAll<Color>(
-                          const Color.fromARGB(255, 191, 34, 23),
-                        ),
+
+                      child: Text(
+                        'Зарегистрироваться',
+                        style: Theme.of(context).textTheme.labelMedium,
                       ),
-                      child: Text('Зарегистрироваться'),
                     ),
                     TextButton(
                       style: ButtonStyle(
@@ -84,7 +89,10 @@ class RegistrationScreen extends StatelessWidget {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: Text('Я здесь был'),
+                      child: Text(
+                        'Я здесь был',
+                        style: Theme.of(context).textTheme.labelSmall,
+                      ),
                     ),
                   ],
                 ),

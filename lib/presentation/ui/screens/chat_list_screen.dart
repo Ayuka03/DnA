@@ -9,8 +9,6 @@ class ChatListScreen extends StatefulWidget {
 }
 
 class _ChatListScreenState extends State<ChatListScreen> {
-  List<dynamic> chts = [];
-
   String userName = 'Даниил Бедарев'; //Временно!!!!
   @override
   Widget build(BuildContext context) {
@@ -25,11 +23,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
         ],
         centerTitle: true,
         title: Text('Мессенджер'),
-        titleTextStyle: TextStyle(
-          color: Colors.white,
-          fontSize: 23,
-          fontWeight: FontWeight.w500,
-        ),
+
         leading: Container(
           padding: EdgeInsets.all(6),
           child: GestureDetector(
@@ -70,15 +64,30 @@ class _ChatListScreenState extends State<ChatListScreen> {
                         horizontal: 10,
                       ),
                       visualDensity: VisualDensity(vertical: -0.2),
-                      leading: ClipOval(
-                        child: Image.network(imageUrl, fit: BoxFit.cover),
+
+                      leading: CircleAvatar(
+                        radius: 30,
+                        backgroundImage: NetworkImage(imageUrl),
                       ),
-                      trailing: Icon(
-                        Icons.new_releases_outlined,
-                        color: Colors.red,
+                      trailing: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Icon(Icons.circle_rounded, color: Colors.red),
+                          // СЮДА ВМЕСТО ИКОНКИ НАДО МАЛЕНЬКУЮ МОЛЕКУЛЬКУ
+                          //
+                          //
+                          //
+                          Text('1', style: TextStyle(color: Colors.white)),
+                        ],
                       ),
-                      title: Text('Даниил Бедарев'),
-                      subtitle: Text('Привет, какашка!'),
+                      title: Text(
+                        'Даниил Бедарев',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      subtitle: Text(
+                        'Привет, какашка!',
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(

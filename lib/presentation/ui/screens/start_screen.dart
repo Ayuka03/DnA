@@ -42,7 +42,7 @@ class _StartScreenState extends State<StartScreen> {
                 children: [
                   Text(
                     'Добро пожаловать!',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                   SizedBox(
                     height: 170,
@@ -65,9 +65,7 @@ class _StartScreenState extends State<StartScreen> {
                     },
                     child: Text(
                       'Связать',
-                      style: TextStyle(
-                        color: const Color.fromARGB(255, 191, 34, 23),
-                      ),
+                      style: Theme.of(context).textTheme.labelMedium,
                     ),
                   ),
                 ],
