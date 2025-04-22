@@ -1,4 +1,5 @@
 import 'package:dna_app/presentation/ui/screens/personal_chat.dart';
+import 'package:dna_app/presentation/ui/screens/settings_srceen.dart';
 import 'package:flutter/material.dart';
 
 class ChatListScreen extends StatefulWidget {
@@ -16,7 +17,9 @@ class _ChatListScreenState extends State<ChatListScreen> {
       appBar: AppBar(
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              // Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context)=>SettingsSrceen(user: userName, indexBottomBar: ))
+              },
             icon: Icon(Icons.settings),
             color: Colors.white,
           ),
