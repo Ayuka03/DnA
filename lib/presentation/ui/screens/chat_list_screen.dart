@@ -1,30 +1,23 @@
 import 'package:dna_app/presentation/ui/screens/personal_chat.dart';
-import 'package:dna_app/presentation/ui/screens/settings_srceen.dart';
 import 'package:flutter/material.dart';
 
 class ChatListScreen extends StatefulWidget {
-  ChatListScreen({super.key, required this.user});
-  final String user;
+  const ChatListScreen({super.key});
 
   @override
   State<ChatListScreen> createState() => _ChatListScreenState();
 }
 
 class _ChatListScreenState extends State<ChatListScreen> {
-  List<dynamic> chts = [];
-  int selectedIndex = 0;
-
   String userName = 'Даниил Бедарев'; //Временно!!!!
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBody: true,
-      backgroundColor: Color.fromARGB(255, 250, 63, 40),
       appBar: AppBar(
         actions: [
           IconButton(
             onPressed: () {},
-            icon: Icon(Icons.edit_square),
+            icon: Icon(Icons.settings),
             color: Colors.white,
           ),
         ],
@@ -43,63 +36,12 @@ class _ChatListScreenState extends State<ChatListScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: Container(
-        margin: EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 220, 220, 220),
-          borderRadius: BorderRadius.circular(30),
-          boxShadow: [
-            BoxShadow(
-              color: const Color.fromARGB(100, 0, 0, 0),
-              blurRadius: 10,
-              offset: Offset(0, 5),
-            ),
-          ],
-        ),
-        child: Theme(
-          data: Theme.of(context).copyWith(
-            splashColor: Colors.transparent,
-            splashFactory: NoSplash.splashFactory,
-          ),
-          child: BottomNavigationBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            type: BottomNavigationBarType.fixed,
-            selectedItemColor: Color.fromARGB(255, 250, 63, 40),
-            unselectedItemColor: Colors.black45,
-            selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
-            unselectedLabelStyle: TextStyle(fontWeight: FontWeight.normal),
-            currentIndex: selectedIndex,
-            onTap: (index) {
-              if (selectedIndex == index) return;
-              if (index == 1) {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder:
-                        (context) =>
-                            SettingsSrceen(user: 'user', indexBottomBar: 1),
-                  ),
-                );
-              }
-            },
-            items: const [
-              BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Чаты'),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.settings),
-                label: 'Настройки',
-              ),
-            ],
-          ),
-        ),
-      ),
+      backgroundColor: Color.fromARGB(255, 250, 63, 40),
       body: ClipRRect(
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(30),
           topRight: Radius.circular(30),
         ),
-        child: Container(
-          color: Colors.white,
-          child: Column(
         child: Container(
           color: Colors.white,
           child: Column(
@@ -168,22 +110,3 @@ class _ChatListScreenState extends State<ChatListScreen> {
     );
   }
 }
-     // index = 0;
-
-              // setState(() {
-              //   selectedIndex = index;
-              // });
-
-              // if (index == 0) {
-              //   Navigator.of(context).push(
-              //     MaterialPageRoute(
-              //       builder: (context) => PersonalChat(userName: userName),
-              //     ),
-              //   );
-              // } else {
-              //   Navigator.of(context).push(
-              //     MaterialPageRoute(
-              //       builder: (context) => SettingsSrceen(user: user),
-              //     ),
-              //   );
-              // }
