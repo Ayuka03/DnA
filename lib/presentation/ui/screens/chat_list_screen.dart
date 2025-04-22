@@ -11,16 +11,67 @@ class ChatListScreen extends StatefulWidget {
 
 class _ChatListScreenState extends State<ChatListScreen> {
   String userName = 'Даниил Бедарев'; //Временно!!!!
+  int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
+      extendBody: true,
+      bottomNavigationBar: Container(
+        margin: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: const Color.fromARGB(255, 220, 220, 220),
+          borderRadius: BorderRadius.circular(30),
+          boxShadow: [
+            BoxShadow(
+              color: const Color.fromARGB(100, 0, 0, 0),
+              blurRadius: 10,
+              offset: Offset(0, 5),
+            ),
+          ],
+        ),
+        child: Theme(
+          data: Theme.of(context).copyWith(
+            splashColor: Colors.transparent,
+            splashFactory: NoSplash.splashFactory,
+          ),
+          child: BottomNavigationBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            type: BottomNavigationBarType.fixed,
+            selectedItemColor: Color.fromARGB(255, 250, 63, 40),
+            unselectedItemColor: Colors.black45,
+            selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
+            unselectedLabelStyle: TextStyle(fontWeight: FontWeight.normal),
+            currentIndex: selectedIndex,
+            onTap: (index) {
+              if (selectedIndex == index) return;
+              if (index == 1) {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder:
+                        (context) =>
+                            SettingsSrceen(user: 'user', indexBottomBar: 1),
+                  ),
+                );
+              }
+            },
+            items: const [
+              BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Чаты'),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.settings),
+                label: 'Настройки',
+              ),
+            ],
+          ),
+        ),
+      ),
+
       appBar: AppBar(
         actions: [
           IconButton(
             onPressed: () {
               // Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context)=>SettingsSrceen(user: userName, indexBottomBar: ))
-              },
+            },
             icon: Icon(Icons.settings),
             color: Colors.white,
           ),
