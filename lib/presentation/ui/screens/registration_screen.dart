@@ -76,8 +76,8 @@ class RegistrationScreen extends StatelessWidget {
                     TextButton(
                       onPressed: () {
                         register(
-                          _emailController.text,
-                          _passwordController.toString(),
+                          _emailController.text.trim(),
+                          _passwordController.text.trim(),
                         );
                       },
 
