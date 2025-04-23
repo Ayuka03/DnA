@@ -3,7 +3,6 @@ import 'package:dna_app/presentation/ui/custom_text_field.dart';
 import 'package:dna_app/presentation/ui/screens/chat_list_screen.dart';
 import 'package:dna_app/presentation/ui/screens/registration_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 // import 'package:google_fonts/google_fonts.dart';
 
@@ -11,6 +10,7 @@ class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  String userEmail = '';
   // FirebaseAuth
 
   @override
@@ -72,10 +72,16 @@ class LoginScreen extends StatelessWidget {
                       controller: _passwordController,
                     ),
                     TextButton(
-                      onPressed: () {
+                      onPressed: () async {
+                        await signInUser(
+                          _emailController.text.trim(),
+                          _passwordController.text.trim(),
+                        );
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => ChatListScreen(),
+                            builder:
+                                (context) =>
+                                    ChatListScreen(userEmail: userEmail),
                           ),
                         );
                       },
@@ -111,5 +117,13 @@ class LoginScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> signInUser(String email, String password) async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+    userEmail = FirebaseAuth.instance.currentUser?.email ?? '';
   }
 }

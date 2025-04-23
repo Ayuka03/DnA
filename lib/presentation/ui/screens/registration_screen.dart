@@ -115,6 +115,7 @@ class RegistrationScreen extends StatelessWidget {
       email: email,
       password: password,
     );
+
     print('Пользователь создан');
   }
 }
