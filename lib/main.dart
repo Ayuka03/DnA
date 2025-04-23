@@ -62,6 +62,16 @@ class MyApp extends StatelessWidget {
           ),
           backgroundColor: Color.fromARGB(255, 250, 63, 40),
         ),
+        snackBarTheme: SnackBarThemeData(
+          insetPadding: EdgeInsets.all(2),
+          backgroundColor: const Color.fromARGB(160, 251, 48, 34),
+          // actionTextColor: Colors.white,
+          contentTextStyle: GoogleFonts.openSans(
+            color: Colors.white,
+            fontSize: 12,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
       ),
       home: StartScreen(),
     );

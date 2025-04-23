@@ -4,12 +4,21 @@ import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:dna_app/presentation/ui/screens/chat_list_screen.dart';
 import 'package:flutter/material.dart';
 
-class RegistrationScreen extends StatelessWidget {
-  RegistrationScreen({super.key});
+class RegistrationScreen extends StatefulWidget {
+  const RegistrationScreen({super.key});
+
+  @override
+  State<RegistrationScreen> createState() => _RegistrationScreenState();
+}
+
+class _RegistrationScreenState extends State<RegistrationScreen> {
   final TextEditingController _emailController = TextEditingController();
+
   final TextEditingController _passwordController = TextEditingController();
+
   final TextEditingController _passwordAgainController =
       TextEditingController();
+  bool successRegistration = false;
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +87,16 @@ class RegistrationScreen extends StatelessWidget {
                         register(
                           _emailController.text.trim(),
                           _passwordController.text.trim(),
+                          _passwordAgainController.text.trim(),
                         );
+                        if (successRegistration) {
+                          _emailController.clear();
+                          _passwordController.clear();
+                          _passwordAgainController.clear();
+                          successRegistration = false;
+                        }
+
+                        print(successRegistration);
                       },
 
                       child: Text(
@@ -110,12 +128,49 @@ class RegistrationScreen extends StatelessWidget {
     );
   }
 
-  Future<void> register(String email, String password) async {
-    FirebaseAuth.instance.createUserWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
+  Future<void> register(
+    String email,
+    String password,
+    String passwordAgain,
+  ) async {
+    final bool emailValid = RegExp(
+      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+    ).hasMatch(email);
+    if (!emailValid) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Неправильно введена почта!')));
+      return;
+    }
+    if (password.length < 6) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Пароль должен содержать больше 6 символов!')),
+      );
+      return;
+    }
+    if (password != passwordAgain) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Пароли не совпадают!')));
+      return;
+    } else {
+      try {
+        FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: email,
+          password: password,
+        );
+        successRegistration = true;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Вы успешно зарегистрировались')),
+        );
+        return;
+      } catch (e) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Возникла ошибка...')));
+      }
 
-    print('Пользователь создан');
+      debugPrint('Пользователь создан');
+    }
   }
 }

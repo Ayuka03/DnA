@@ -124,4 +124,5 @@ class LoginScreen extends StatelessWidget {
         .signInWithEmailAndPassword(email: email, password: password);
     userEmail = userCredential.user?.email ?? '';
   }
+
 }
