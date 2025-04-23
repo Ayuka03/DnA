@@ -1,4 +1,3 @@
-import 'package:dna_app/presentation/ui/screens/chat_list_screen.dart';
 import 'package:flutter/material.dart';
 
 class SettingsSrceen extends StatefulWidget {

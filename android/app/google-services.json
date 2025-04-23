@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "958996915651",
+    "project_id": "dna-app-bb383",
+    "storage_bucket": "dna-app-bb383.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:958996915651:android:da7a2abb6e3ae78e740976",
+        "android_client_info": {
+          "package_name": "com.example.dna_flutter_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHvRwh7rgtu4AIv4XVbeNM0mtIjagL6xA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

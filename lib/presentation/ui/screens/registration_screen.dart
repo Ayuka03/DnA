@@ -1,5 +1,6 @@
 //
 import 'package:dna_app/presentation/ui/custom_text_field.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:dna_app/presentation/ui/screens/chat_list_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -73,7 +74,12 @@ class RegistrationScreen extends StatelessWidget {
                       controller: _passwordAgainController,
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        register(
+                          _emailController.text,
+                          _passwordController.toString(),
+                        );
+                      },
 
                       child: Text(
                         'Зарегистрироваться',
@@ -102,5 +108,13 @@ class RegistrationScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> register(String email, String password) async {
+    FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+    print('Пользователь создан');
   }
 }

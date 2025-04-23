@@ -2,6 +2,8 @@
 import 'package:dna_app/presentation/ui/custom_text_field.dart';
 import 'package:dna_app/presentation/ui/screens/chat_list_screen.dart';
 import 'package:dna_app/presentation/ui/screens/registration_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 // import 'package:google_fonts/google_fonts.dart';
 
@@ -9,6 +11,7 @@ class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  // FirebaseAuth
 
   @override
   Widget build(BuildContext context) {
