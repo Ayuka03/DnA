@@ -68,7 +68,7 @@ class MyApp extends StatelessWidget {
           // actionTextColor: Colors.white,
           contentTextStyle: GoogleFonts.openSans(
             color: Colors.white,
-            fontSize: 12,
+            fontSize: 14,
             fontWeight: FontWeight.w500,
           ),
         ),

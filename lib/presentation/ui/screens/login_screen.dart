@@ -1,17 +1,27 @@
 //
 import 'package:dna_app/presentation/ui/custom_text_field.dart';
 import 'package:dna_app/presentation/ui/screens/chat_list_screen.dart';
+import 'package:dna_app/presentation/ui/screens/home_screen.dart';
 import 'package:dna_app/presentation/ui/screens/registration_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 // import 'package:google_fonts/google_fonts.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
+
   final TextEditingController _passwordController = TextEditingController();
+
+  bool userInvalid = false;
+
   String userEmail = '';
-  // FirebaseAuth
 
   @override
   Widget build(BuildContext context) {
@@ -77,13 +87,9 @@ class LoginScreen extends StatelessWidget {
                           _emailController.text.trim(),
                           _passwordController.text.trim(),
                         );
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder:
-                                (context) =>
-                                    ChatListScreen(userEmail: userEmail),
-                          ),
-                        );
+                        if (userInvalid) {
+                          _passwordController.clear();
+                        }
                       },
                       style: ButtonStyle(
                         foregroundColor: WidgetStatePropertyAll<Color>(
@@ -120,9 +126,32 @@ class LoginScreen extends StatelessWidget {
   }
 
   Future<void> signInUser(String email, String password) async {
-    final userCredential = await FirebaseAuth.instance
-        .signInWithEmailAndPassword(email: email, password: password);
-    userEmail = userCredential.user?.email ?? '';
+    try {
+      final userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+      if (userCredential.user == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Такого пользователя не существует')),
+        );
+        return;
+      }
+      if (userCredential.user?.email == null) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Введите почту!')));
+        return;
+      }
+      userEmail = userCredential.user?.email ?? '';
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => HomeScreen(userEmail: userEmail),
+        ),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Возникла ошибка')));
+      userInvalid = true;
+    }
   }
-
 }

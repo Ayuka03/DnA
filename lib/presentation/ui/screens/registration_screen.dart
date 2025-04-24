@@ -1,5 +1,7 @@
 //
 import 'package:dna_app/presentation/ui/custom_text_field.dart';
+import 'package:dna_app/presentation/ui/screens/chat_list_screen.dart';
+import 'package:dna_app/presentation/ui/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:dna_app/presentation/ui/screens/chat_list_screen.dart';
 import 'package:flutter/material.dart';
@@ -160,9 +162,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           password: password,
         );
         successRegistration = true;
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Вы успешно зарегистрировались')),
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (BuildContext context) => HomeScreen(userEmail: email),
+          ),
         );
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   SnackBar(content: Text('Вы успешно зарегистрировались')),
+        // );
         return;
       } catch (e) {
         ScaffoldMessenger.of(

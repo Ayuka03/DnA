@@ -30,7 +30,7 @@ class _StartScreenState extends State<StartScreen> {
           child: Container(
             alignment: Alignment.center,
             width: 300,
-            height: 300,
+            height: 320,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(60),
@@ -44,14 +44,15 @@ class _StartScreenState extends State<StartScreen> {
                     'Добро пожаловать!',
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
+                  SizedBox(height: 30),
                   SizedBox(
                     height: 170,
                     width: 170,
                     child: RiveAnimation.asset(
+                      speedMultiplier: 0.6,
                       'assets/animations/animated_logo.riv',
                     ),
                   ),
-
                   // Image.asset(
                   //   'assets/pictures/logo.png',
                   //   height: 170,
@@ -59,7 +60,7 @@ class _StartScreenState extends State<StartScreen> {
                   // ),
                   TextButton(
                     onPressed: () {
-                      Navigator.of(context).push(
+                      Navigator.of(context).pushReplacement(
                         MaterialPageRoute(builder: (context) => LoginScreen()),
                       );
                     },

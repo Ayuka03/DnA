@@ -93,7 +93,8 @@ class _PersonalChatState extends State<PersonalChat> {
                         _messageFromUser.clear();
                       },
                       icon: Icon(
-                        Icons.send_outlined,
+                        Icons.send_rounded,
+                        size: 35,
                         color: const Color.fromARGB(209, 250, 77, 65),
                       ),
                     ),
