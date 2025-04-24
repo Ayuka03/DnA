@@ -1,8 +1,8 @@
 import 'package:dna_app/presentation/ui/screens/custom_widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 
-class PersonalChat extends StatefulWidget {
-  const PersonalChat({
+class PersonalChatScreen extends StatefulWidget {
+  const PersonalChatScreen({
     super.key,
     required this.userName,
     required this.imageUrl,
@@ -11,12 +11,35 @@ class PersonalChat extends StatefulWidget {
   final String imageUrl;
 
   @override
-  State<PersonalChat> createState() => _PersonalChatState();
+  State<PersonalChatScreen> createState() => _PersonalChatState();
 }
 
-class _PersonalChatState extends State<PersonalChat> {
+class _PersonalChatState extends State<PersonalChatScreen> {
   List<String> messagesFromUser = [];
   final TextEditingController _messageFromUser = TextEditingController();
+  final Color _colorFromUser = Colors.black;
+  bool isMessage = false;
+  @override
+  void initState() {
+    super.initState();
+    _messageFromUser.addListener(listener);
+  }
+
+  @override
+  void dispose() {
+    _messageFromUser.dispose();
+    super.dispose();
+  }
+
+  void listener() {
+    if (_messageFromUser.text.isNotEmpty) {
+      isMessage = true;
+    } else {
+      isMessage = false;
+    }
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,18 +109,30 @@ class _PersonalChatState extends State<PersonalChat> {
                         controller: _messageFromUser,
                       ),
                     ),
-                    IconButton(
-                      onPressed: () {
-                        messagesFromUser.add(_messageFromUser.text.trim());
-                        setState(() {});
-                        _messageFromUser.clear();
-                      },
-                      icon: Icon(
-                        Icons.send_rounded,
-                        size: 35,
-                        color: const Color.fromARGB(209, 250, 77, 65),
-                      ),
-                    ),
+                    isMessage
+                        ? IconButton(
+                          onPressed: () {
+                            sendMessage(_messageFromUser.text.trim());
+                            _messageFromUser.clear();
+                            print(
+                              _colorFromUser.toString(),
+                            ); //Полезная штука, надо обсудить
+                          },
+                          icon: Icon(
+                            Icons.send_rounded,
+                            size: 35,
+                            color: const Color.fromARGB(209, 250, 77, 65),
+                          ),
+                        )
+                        : IconButton(
+                          highlightColor: Colors.transparent,
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.send_rounded,
+                            size: 35,
+                            color: const Color.fromARGB(100, 250, 77, 65),
+                          ),
+                        ),
                   ],
                 ),
               ),
@@ -106,5 +141,13 @@ class _PersonalChatState extends State<PersonalChat> {
         ),
       ),
     );
+  }
+
+  void sendMessage(String message) {
+    if (message != '') {
+      setState(() {
+        messagesFromUser.add(message);
+      });
+    }
   }
 }

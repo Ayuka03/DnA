@@ -1,11 +1,8 @@
-//
 import 'package:dna_app/presentation/ui/screens/custom_widgets/custom_text_field.dart';
-import 'package:dna_app/presentation/ui/screens/chat_feature/chat_list_screen.dart';
 import 'package:dna_app/presentation/ui/screens/chat_feature/home_screen.dart';
 import 'package:dna_app/presentation/ui/screens/sign_in_feature/registration_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-// import 'package:google_fonts/google_fonts.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({super.key});

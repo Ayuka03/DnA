@@ -1,6 +1,4 @@
-import 'package:dna_app/presentation/ui/screens/chat_feature/home_screen.dart';
-import 'package:dna_app/presentation/ui/screens/chat_feature/personal_chat.dart';
-import 'package:dna_app/presentation/ui/screens/chat_feature/settings_srceen.dart';
+import 'package:dna_app/presentation/ui/screens/chat_feature/personal_chat_screen.dart';
 import 'package:flutter/material.dart';
 
 class ChatListScreen extends StatefulWidget {
@@ -108,7 +106,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder:
-                                  (context) => PersonalChat(
+                                  (context) => PersonalChatScreen(
                                     userName: userName,
                                     imageUrl: imageUrl,
                                   ),
