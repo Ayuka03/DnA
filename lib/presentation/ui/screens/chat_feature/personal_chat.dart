@@ -1,4 +1,4 @@
-import 'package:dna_app/presentation/ui/custom_text_field.dart';
+import 'package:dna_app/presentation/ui/screens/custom_widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 
 class PersonalChat extends StatefulWidget {

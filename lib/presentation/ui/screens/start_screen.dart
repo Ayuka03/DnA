@@ -1,5 +1,5 @@
 // import 'package:dna_app/presentation/ui/screens/chat_list_screen.dart';
-import 'package:dna_app/presentation/ui/screens/login_screen.dart';
+import 'package:dna_app/presentation/ui/screens/sign_in_feature/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart' hide LinearGradient;
 

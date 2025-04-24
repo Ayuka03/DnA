@@ -1,5 +1,5 @@
-import 'package:dna_app/presentation/ui/screens/chat_list_screen.dart';
-import 'package:dna_app/presentation/ui/screens/settings_srceen.dart';
+import 'package:dna_app/presentation/ui/screens/chat_feature/chat_list_screen.dart';
+import 'package:dna_app/presentation/ui/screens/chat_feature/settings_srceen.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {

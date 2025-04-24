@@ -1,6 +1,6 @@
-import 'package:dna_app/presentation/ui/screens/home_screen.dart';
-import 'package:dna_app/presentation/ui/screens/personal_chat.dart';
-import 'package:dna_app/presentation/ui/screens/settings_srceen.dart';
+import 'package:dna_app/presentation/ui/screens/chat_feature/home_screen.dart';
+import 'package:dna_app/presentation/ui/screens/chat_feature/personal_chat.dart';
+import 'package:dna_app/presentation/ui/screens/chat_feature/settings_srceen.dart';
 import 'package:flutter/material.dart';
 
 class ChatListScreen extends StatefulWidget {
