@@ -19,6 +19,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final TextEditingController _passwordAgainController =
       TextEditingController();
   bool successRegistration = false;
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    _passwordAgainController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
