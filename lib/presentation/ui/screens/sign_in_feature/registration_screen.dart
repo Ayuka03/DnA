@@ -1,4 +1,5 @@
 //
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dna_app/presentation/ui/screens/custom_widgets/custom_text_field.dart';
 import 'package:dna_app/presentation/ui/screens/chat_feature/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -166,6 +167,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           email: email,
           password: password,
         );
+        FirebaseFirestore.instance.collection('users').add({'email': email});
         successRegistration = true;
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
