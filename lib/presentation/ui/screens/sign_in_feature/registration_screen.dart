@@ -13,6 +13,7 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
+  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
 
   final TextEditingController _passwordController = TextEditingController();
@@ -20,6 +21,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final TextEditingController _passwordAgainController =
       TextEditingController();
   bool successRegistration = false;
+  String userName = '';
   @override
   void dispose() {
     _emailController.dispose();
@@ -46,7 +48,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.only(
-              top: 150,
+              top: 80,
               bottom: 220,
               left: 20,
               right: 20,
@@ -79,6 +81,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                     CustomTextField(
+                      labelName: 'Ваше имя',
+                      controller: _nameController,
+                    ),
+                    CustomTextField(
                       labelName: 'Ваша почта',
                       controller: _emailController,
                     ),
@@ -93,6 +99,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     TextButton(
                       onPressed: () {
                         register(
+                          _nameController.text.trim(),
                           _emailController.text.trim(),
                           _passwordController.text.trim(),
                           _passwordAgainController.text.trim(),
@@ -137,6 +144,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   Future<void> register(
+    String name,
     String email,
     String password,
     String passwordAgain,
@@ -148,6 +156,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text('Неправильно введена почта!')));
+      return;
+    }
+    if (name == '') {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Имя не должно быть пустым!')));
       return;
     }
     if (password.length < 6) {
@@ -163,15 +177,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       return;
     } else {
       try {
-        FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: email,
-          password: password,
-        );
-        FirebaseFirestore.instance.collection('users').add({'email': email});
+        final userCredential = await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(email: email, password: password);
+        final uid = userCredential.user?.uid;
+        FirebaseFirestore.instance.collection('users').doc(uid).set({
+          'email': email,
+          'name': name,
+        });
         successRegistration = true;
+        await dataGet();
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (BuildContext context) => HomeScreen(userEmail: email),
+            builder: (BuildContext context) => HomeScreen(userName: userName),
           ),
         );
         // ScaffoldMessenger.of(context).showSnackBar(
@@ -186,5 +203,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
       debugPrint('Пользователь создан');
     }
+  }
+
+  Future<void> dataGet() async {
+    final userId = FirebaseAuth.instance.currentUser?.uid;
+    final data =
+        await FirebaseFirestore.instance.collection('users').doc(userId).get();
+    userName = data.data()?['name'].toString() ?? 'DnA';
   }
 }

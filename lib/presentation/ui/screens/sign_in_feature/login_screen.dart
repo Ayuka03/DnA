@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dna_app/presentation/ui/screens/custom_widgets/custom_text_field.dart';
 import 'package:dna_app/presentation/ui/screens/chat_feature/home_screen.dart';
 import 'package:dna_app/presentation/ui/screens/sign_in_feature/registration_screen.dart';
@@ -19,6 +20,8 @@ class _LoginScreenState extends State<LoginScreen> {
   bool userInvalid = false;
 
   String userEmail = '';
+  String userName = '';
+
   @override
   void dispose() {
     _emailController.dispose();
@@ -145,10 +148,9 @@ class _LoginScreenState extends State<LoginScreen> {
         return;
       }
       userEmail = userCredential.user?.email ?? '';
+      await dataGet();
       Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => HomeScreen(userEmail: userEmail),
-        ),
+        MaterialPageRoute(builder: (context) => HomeScreen(userName: userName)),
       );
     } catch (e) {
       ScaffoldMessenger.of(
@@ -156,5 +158,14 @@ class _LoginScreenState extends State<LoginScreen> {
       ).showSnackBar(SnackBar(content: Text('Возникла ошибка')));
       userInvalid = true;
     }
+  }
+
+  Future<void> dataGet() async {
+    final userId = FirebaseAuth.instance.currentUser?.uid;
+    print(userId);
+    final data =
+        await FirebaseFirestore.instance.collection('users').doc(userId).get();
+    print(data.data());
+    userName = data.data()?['name'].toString() ?? 'DnA';
   }
 }

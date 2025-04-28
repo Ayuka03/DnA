@@ -1,24 +1,27 @@
 import 'package:dna_app/presentation/ui/screens/chat_feature/chat_list_screen.dart';
 import 'package:dna_app/presentation/ui/screens/chat_feature/settings_screen.dart';
+
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key, required this.userEmail});
-  final String userEmail;
+  const HomeScreen({super.key, required this.userName});
+  final String userName;
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  // String userName = '';
   int selectedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: IndexedStack(
         index: selectedIndex,
         children: [
-          ChatListScreen(userEmail: widget.userEmail),
-          SettingsSrceen(user: widget.userEmail),
+          ChatListScreen(userEmail: widget.userName),
+          SettingsSrceen(user: widget.userName),
         ],
       ),
 
