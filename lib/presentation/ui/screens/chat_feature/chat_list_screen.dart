@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dna_app/presentation/ui/screens/chat_feature/personal_chat_screen.dart';
+import 'package:dna_app/presentation/ui/screens/custom_widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 
 class ChatListScreen extends StatefulWidget {
@@ -12,6 +14,8 @@ class ChatListScreen extends StatefulWidget {
 class _ChatListScreenState extends State<ChatListScreen> {
   String userName = 'Даниил Бедарев'; //Временно!!!!
   int selectedIndex = 0;
+  TextEditingController _searchController = TextEditingController();
+  String newFriend = '1';
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -25,11 +29,47 @@ class _ChatListScreenState extends State<ChatListScreen> {
           actions: [
             IconButton(
               onPressed: () {
-                // Navigator.of(context).push(
-                //   MaterialPageRoute(
-                //     builder: (BuildContext context) => HomeScreen(),
-                //   ),
-                // );
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text('Написать сообщение'),
+                      content: Container(
+                        alignment: Alignment.centerLeft,
+                        height: 120,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: CustomTextField(
+                                    labelName: 'Почта',
+                                    controller: _searchController,
+                                  ),
+                                ),
+                                IconButton(
+                                  onPressed: () {},
+                                  icon: Icon(Icons.search),
+                                ),
+                              ],
+                            ),
+                            GestureDetector(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 1,
+                                ),
+                                child: Text(newFriend),
+                              ),
+                              onTap: () {},
+                            ),
+                          ],
+                        ),
+                      ),
+                      backgroundColor: Colors.white,
+                    );
+                  },
+                );
               },
               icon: Icon(Icons.edit_note, size: 35),
               color: Colors.white,
@@ -173,5 +213,13 @@ class _ChatListScreenState extends State<ChatListScreen> {
         // ),
       ),
     );
+  }
+
+  Future<void> getUser(String newFriendEmail) async {
+    final user =
+        await FirebaseFirestore.instance
+            .collection('users')
+            .where('email', isEqualTo: newFriendEmail)
+            .get();
   }
 }
