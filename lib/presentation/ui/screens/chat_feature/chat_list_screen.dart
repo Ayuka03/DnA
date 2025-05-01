@@ -14,8 +14,8 @@ class ChatListScreen extends StatefulWidget {
 class _ChatListScreenState extends State<ChatListScreen> {
   String userName = 'Даниил Бедарев'; //Временно!!!!
   int selectedIndex = 0;
-  TextEditingController _searchController = TextEditingController();
-  String newFriend = '1';
+  final TextEditingController _searchController = TextEditingController();
+  String newFriend = '';
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -29,6 +29,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
           actions: [
             IconButton(
               onPressed: () {
+                // getUser('2@gmail.com');
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
@@ -49,7 +50,14 @@ class _ChatListScreenState extends State<ChatListScreen> {
                                   ),
                                 ),
                                 IconButton(
-                                  onPressed: () {},
+                                  onPressed: () async {
+                                    await getUser(
+                                      _searchController.text.trim(),
+                                    );
+                                    setState(() {});
+                                    _searchController.clear();
+                                  },
+
                                   icon: Icon(Icons.search),
                                 ),
                               ],
@@ -216,10 +224,11 @@ class _ChatListScreenState extends State<ChatListScreen> {
   }
 
   Future<void> getUser(String newFriendEmail) async {
-    final user =
+    var user =
         await FirebaseFirestore.instance
             .collection('users')
             .where('email', isEqualTo: newFriendEmail)
             .get();
+    newFriend = user.docs.first['email'];
   }
 }
