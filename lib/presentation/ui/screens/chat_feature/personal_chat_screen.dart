@@ -46,7 +46,7 @@ class _PersonalChatState extends State<PersonalChatScreen> {
       appBar: AppBar(
         actions: [
           CircleAvatar(
-            backgroundImage: NetworkImage(widget.imageUrl),
+            backgroundImage: AssetImage(widget.imageUrl),
             radius: 25,
           ),
         ],

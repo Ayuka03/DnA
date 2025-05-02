@@ -64,7 +64,12 @@ flutter:
   assets:
       - assets/pictures/logo.png
       - assets/animations/animated_logo.riv
-
+      - assets/pictures/7-4.jpg
+      - assets/pictures/12-4.jpg
+      - assets/pictures/22-4.jpg
+      - assets/pictures/26-4.jpg
+      - assets/pictures/35-4.jpg
+      - assets/pictures/38-4.jpg
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

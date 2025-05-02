@@ -1,11 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dna_app/presentation/ui/screens/chat_feature/personal_chat_screen.dart';
 import 'package:dna_app/presentation/ui/screens/custom_widgets/custom_text_field.dart';
+import 'package:dna_app/presentation/ui/screens/custom_widgets/image_list.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:dna_app/entities/user_entity.dart';
 
 class ChatListScreen extends StatefulWidget {
-  const ChatListScreen({super.key, required this.userEmail});
+  const ChatListScreen({
+    super.key,
+    required this.userEmail,
+    required this.indImage,
+  });
   final String userEmail;
+  final int indImage;
 
   @override
   State<ChatListScreen> createState() => _ChatListScreenState();
@@ -16,6 +24,8 @@ class _ChatListScreenState extends State<ChatListScreen> {
   int selectedIndex = 0;
   final TextEditingController _searchController = TextEditingController();
   String newFriend = '';
+
+  List<UserEntity> userFriends = [];
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -33,48 +43,54 @@ class _ChatListScreenState extends State<ChatListScreen> {
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: Text('Написать сообщение'),
-                      content: Container(
-                        alignment: Alignment.centerLeft,
-                        height: 120,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
+                    return StatefulBuilder(
+                      builder: (context, setState) {
+                        return AlertDialog(
+                          title: Text('Написать сообщение'),
+                          content: Container(
+                            alignment: Alignment.centerLeft,
+                            height: 120,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Expanded(
-                                  child: CustomTextField(
-                                    labelName: 'Почта',
-                                    controller: _searchController,
-                                  ),
-                                ),
-                                IconButton(
-                                  onPressed: () async {
-                                    await getUser(
-                                      _searchController.text.trim(),
-                                    );
-                                    setState(() {});
-                                    _searchController.clear();
-                                  },
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: CustomTextField(
+                                        labelName: 'Почта',
+                                        controller: _searchController,
+                                      ),
+                                    ),
+                                    IconButton(
+                                      onPressed: () async {
+                                        // String userEmail = '';
+                                        await getUser(
+                                          _searchController.text.trim(),
+                                        );
+                                        setState(() {});
 
-                                  icon: Icon(Icons.search),
+                                        _searchController.clear();
+                                      },
+
+                                      icon: Icon(Icons.search),
+                                    ),
+                                  ],
+                                ),
+                                GestureDetector(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 1,
+                                    ),
+                                    child: Text(newFriend),
+                                  ),
+                                  onTap: () {},
                                 ),
                               ],
                             ),
-                            GestureDetector(
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 1,
-                                ),
-                                child: Text(newFriend),
-                              ),
-                              onTap: () {},
-                            ),
-                          ],
-                        ),
-                      ),
-                      backgroundColor: Colors.white,
+                          ),
+                          backgroundColor: Colors.white,
+                        );
+                      },
                     );
                   },
                 );
@@ -90,9 +106,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
             padding: EdgeInsets.all(6),
             child: GestureDetector(
               child: CircleAvatar(
-                backgroundImage: NetworkImage(
-                  'https://avatars.mds.yandex.net/i?id=a374adb6500819717978c38b4b4a0799_l-4284908-images-thumbs&ref=rim&n=13&w=914&h=779',
-                ),
+                backgroundImage: AssetImage(imagePath[widget.indImage]),
               ),
               onTap: () {},
             ),
@@ -116,10 +130,10 @@ class _ChatListScreenState extends State<ChatListScreen> {
                           height: 1,
                           color: Color.fromARGB(40, 250, 63, 40),
                         ),
-                    itemCount: 10,
+                    itemCount: userFriends.length,
                     itemBuilder: (context, index) {
-                      final String imageUrl =
-                          'https://memepedia.ru/wp-content/uploads/2016/09/uzbagoysya_29873845_orig_.jpeg';
+                      final user = userFriends[index];
+                      final imageInd = user.indexImage;
                       return ListTile(
                         contentPadding: EdgeInsets.symmetric(
                           vertical: 3,
@@ -129,7 +143,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
 
                         leading: CircleAvatar(
                           radius: 30,
-                          backgroundImage: NetworkImage(imageUrl),
+                          backgroundImage: AssetImage(imagePath[imageInd]),
                         ),
                         trailing: Stack(
                           alignment: Alignment.center,
@@ -143,11 +157,11 @@ class _ChatListScreenState extends State<ChatListScreen> {
                           ],
                         ),
                         title: Text(
-                          'Даниил Бедарев',
+                          user.name,
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                         subtitle: Text(
-                          'Привет, какашка!',
+                          'Привет, милашка!',
                           style: Theme.of(context).textTheme.titleSmall,
                         ),
                         onTap: () {
@@ -156,7 +170,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                               builder:
                                   (context) => PersonalChatScreen(
                                     userName: userName,
-                                    imageUrl: imageUrl,
+                                    imageUrl: imagePath[imageInd],
                                   ),
                             ),
                           );
@@ -224,11 +238,38 @@ class _ChatListScreenState extends State<ChatListScreen> {
   }
 
   Future<void> getUser(String newFriendEmail) async {
-    var user =
-        await FirebaseFirestore.instance
-            .collection('users')
-            .where('email', isEqualTo: newFriendEmail)
-            .get();
-    newFriend = user.docs.first['email'];
+    if (FirebaseAuth.instance.currentUser?.email == newFriendEmail) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Нельзя связаться с собой!')));
+      return;
+    }
+
+    try {
+      var user =
+          await FirebaseFirestore.instance
+              .collection('users')
+              .where('email', isEqualTo: newFriendEmail)
+              .get();
+
+      newFriend = user.docs.first['email'];
+      var newUserFriend = user.docs.first.data();
+      userFriends.add(
+        UserEntity(
+          email: newUserFriend['email'],
+          name: newUserFriend['name'],
+          indexImage: newUserFriend['indexImage'],
+        ),
+      );
+      setState(() {});
+    } catch (e) {
+      print('добавил');
+      print(newFriendEmail);
+
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Пользователь не найден!')));
+      return;
+    }
   }
 }

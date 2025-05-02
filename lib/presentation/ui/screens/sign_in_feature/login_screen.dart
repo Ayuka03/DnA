@@ -21,6 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   String userEmail = '';
   String userName = '';
+  int indImage = 0;
 
   @override
   void dispose() {
@@ -150,7 +151,7 @@ class _LoginScreenState extends State<LoginScreen> {
       userEmail = userCredential.user?.email ?? '';
       await dataGet();
       Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => HomeScreen(userName: userName)),
+        MaterialPageRoute(builder: (context) => HomeScreen(userName: userName, indImage: indImage,)),
       );
     } catch (e) {
       ScaffoldMessenger.of(
@@ -167,5 +168,6 @@ class _LoginScreenState extends State<LoginScreen> {
         await FirebaseFirestore.instance.collection('users').doc(userId).get();
     print(data.data());
     userName = data.data()?['name'].toString() ?? 'DnA';
+    indImage = data.data()?['indexImage'] ?? 0;
   }
 }

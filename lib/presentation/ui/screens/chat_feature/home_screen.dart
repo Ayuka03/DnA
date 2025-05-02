@@ -4,8 +4,9 @@ import 'package:dna_app/presentation/ui/screens/chat_feature/settings_screen.dar
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key, required this.userName});
+  const HomeScreen({super.key, required this.userName, required this.indImage});
   final String userName;
+  final int indImage;
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -20,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: IndexedStack(
         index: selectedIndex,
         children: [
-          ChatListScreen(userEmail: widget.userName),
+          ChatListScreen(userEmail: widget.userName, indImage: widget.indImage,),
           SettingsSrceen(user: widget.userName),
         ],
       ),

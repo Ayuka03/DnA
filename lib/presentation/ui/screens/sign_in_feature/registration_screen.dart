@@ -1,4 +1,6 @@
 //
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dna_app/presentation/ui/screens/custom_widgets/custom_text_field.dart';
 import 'package:dna_app/presentation/ui/screens/chat_feature/home_screen.dart';
@@ -22,6 +24,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       TextEditingController();
   bool successRegistration = false;
   String userName = '';
+  int indImage = 0;
   @override
   void dispose() {
     _emailController.dispose();
@@ -179,16 +182,19 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       try {
         final userCredential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email, password: password);
+        final random = Random();
+
         final uid = userCredential.user?.uid;
         FirebaseFirestore.instance.collection('users').doc(uid).set({
           'email': email,
           'name': name,
+          'indexImage': random.nextInt(6),
         });
         successRegistration = true;
         await dataGet();
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (BuildContext context) => HomeScreen(userName: userName),
+            builder: (BuildContext context) => HomeScreen(userName: userName, indImage: indImage,),
           ),
         );
         // ScaffoldMessenger.of(context).showSnackBar(
@@ -210,5 +216,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     final data =
         await FirebaseFirestore.instance.collection('users').doc(userId).get();
     userName = data.data()?['name'].toString() ?? 'DnA';
+    indImage = data.data()?['indexImage'] ?? 0;
   }
 }
