@@ -24,6 +24,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
   int selectedIndex = 0;
   final TextEditingController _searchController = TextEditingController();
   String newFriend = '';
+  bool isError = false;
 
   List<UserEntity> userFriends = [];
   @override
@@ -55,12 +56,19 @@ class _ChatListScreenState extends State<ChatListScreen> {
                               children: [
                                 Row(
                                   children: [
-                                    Expanded(
-                                      child: CustomTextField(
-                                        labelName: 'Почта',
-                                        controller: _searchController,
-                                      ),
-                                    ),
+                                    !isError
+                                        ? Expanded(
+                                          child: CustomTextField(
+                                            labelName: 'Почта',
+                                            controller: _searchController,
+                                          ),
+                                        )
+                                        : Expanded(
+                                          child: CustomTextField(
+                                            labelName: 'Не найден!',
+                                            controller: _searchController,
+                                          ),
+                                        ),
                                     IconButton(
                                       onPressed: () async {
                                         // String userEmail = '';
@@ -238,6 +246,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
   }
 
   Future<void> getUser(String newFriendEmail) async {
+    isError = false;
     if (FirebaseAuth.instance.currentUser?.email == newFriendEmail) {
       ScaffoldMessenger.of(
         context,
@@ -265,6 +274,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
     } catch (e) {
       print('добавил');
       print(newFriendEmail);
+      isError = true;
 
       ScaffoldMessenger.of(
         context,
