@@ -152,6 +152,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     String password,
     String passwordAgain,
   ) async {
+    final List<String> friends = [];
     final bool emailValid = RegExp(
       r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
     ).hasMatch(email);
@@ -189,12 +190,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           'email': email,
           'name': name,
           'indexImage': random.nextInt(6),
+          'friends': friends,
         });
         successRegistration = true;
         await dataGet();
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (BuildContext context) => HomeScreen(userName: userName, indImage: indImage,),
+            builder:
+                (BuildContext context) =>
+                    HomeScreen(userName: userName, indImage: indImage),
           ),
         );
         // ScaffoldMessenger.of(context).showSnackBar(

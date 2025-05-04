@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dna_app/presentation/ui/screens/chat_feature/personal_chat_screen.dart';
 import 'package:dna_app/presentation/ui/screens/custom_widgets/custom_text_field.dart';
@@ -270,6 +272,18 @@ class _ChatListScreenState extends State<ChatListScreen> {
           indexImage: newUserFriend['indexImage'],
         ),
       );
+      String userId = await FirebaseAuth.instance.currentUser!.uid;
+
+      FirebaseFirestore.instance.collection('users').doc(userId).update({
+        'friends': FieldValue.arrayUnion([newFriendEmail]),
+      });
+
+      String newIdFriend = user.docs.first.id;
+      FirebaseFirestore.instance.collection('users').doc(newIdFriend).update({
+        'friends': FieldValue.arrayUnion([
+          FirebaseAuth.instance.currentUser!.email,
+        ]),
+      });
       setState(() {});
     } catch (e) {
       print('добавил');
