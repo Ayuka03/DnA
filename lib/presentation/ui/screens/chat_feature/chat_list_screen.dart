@@ -27,8 +27,10 @@ class _ChatListScreenState extends State<ChatListScreen> {
   final TextEditingController _searchController = TextEditingController();
   String newFriend = '';
   bool isError = false;
-
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   List<UserEntity> userFriends = [];
+
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -133,56 +135,68 @@ class _ChatListScreenState extends State<ChatListScreen> {
             child: Column(
               children: [
                 Flexible(
-                  child: ListView.separated(
-                    separatorBuilder:
-                        (context, index) => Divider(
-                          thickness: 2,
-                          height: 1,
-                          color: Color.fromARGB(40, 250, 63, 40),
-                        ),
-                    itemCount: userFriends.length,
-                    itemBuilder: (context, index) {
-                      final user = userFriends[index];
-                      final imageInd = user.indexImage;
-                      return ListTile(
-                        contentPadding: EdgeInsets.symmetric(
-                          vertical: 3,
-                          horizontal: 10,
-                        ),
-                        visualDensity: VisualDensity(vertical: -0.2),
-
-                        leading: CircleAvatar(
-                          radius: 30,
-                          backgroundImage: AssetImage(imagePath[imageInd]),
-                        ),
-                        trailing: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Icon(Icons.circle_rounded, color: Colors.red),
-                            // СЮДА ВМЕСТО ИКОНКИ НАДО МАЛЕНЬКУЮ МОЛЕКУЛЬКУ
-                            //
-                            //
-                            //
-                            Text('1', style: TextStyle(color: Colors.white)),
-                          ],
-                        ),
-                        title: Text(
-                          user.name,
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                        subtitle: Text(
-                          'Привет, милашка!',
-                          style: Theme.of(context).textTheme.titleSmall,
-                        ),
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder:
-                                  (context) => PersonalChatScreen(
-                                    userName: userName,
-                                    imageUrl: imagePath[imageInd],
-                                  ),
+                  child: StreamBuilder(
+                    stream:
+                        _firestore
+                            .collection('users')
+                            .doc(_firebaseAuth.currentUser!.uid)
+                            .snapshots(),
+                    builder: (context, snapshot) {
+                      return ListView.separated(
+                        separatorBuilder:
+                            (context, index) => Divider(
+                              thickness: 2,
+                              height: 1,
+                              color: Color.fromARGB(40, 250, 63, 40),
                             ),
+                        itemCount: userFriends.length,
+                        itemBuilder: (context, index) {
+                          final user = userFriends[index];
+                          final imageInd = user.indexImage;
+                          return ListTile(
+                            contentPadding: EdgeInsets.symmetric(
+                              vertical: 3,
+                              horizontal: 10,
+                            ),
+                            visualDensity: VisualDensity(vertical: -0.2),
+
+                            leading: CircleAvatar(
+                              radius: 30,
+                              backgroundImage: AssetImage(imagePath[imageInd]),
+                            ),
+                            trailing: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                Icon(Icons.circle_rounded, color: Colors.red),
+                                // СЮДА ВМЕСТО ИКОНКИ НАДО МАЛЕНЬКУЮ МОЛЕКУЛЬКУ
+                                //
+                                //
+                                //
+                                Text(
+                                  '1',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ],
+                            ),
+                            title: Text(
+                              user.name,
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                            subtitle: Text(
+                              'Привет, милашка!',
+                              style: Theme.of(context).textTheme.titleSmall,
+                            ),
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder:
+                                      (context) => PersonalChatScreen(
+                                        userName: userName,
+                                        imageUrl: imagePath[imageInd],
+                                      ),
+                                ),
+                              );
+                            },
                           );
                         },
                       );
@@ -272,7 +286,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
           indexImage: newUserFriend['indexImage'],
         ),
       );
-      String userId = await FirebaseAuth.instance.currentUser!.uid;
+      String userId = FirebaseAuth.instance.currentUser!.uid;
 
       FirebaseFirestore.instance.collection('users').doc(userId).update({
         'friends': FieldValue.arrayUnion([newFriendEmail]),
